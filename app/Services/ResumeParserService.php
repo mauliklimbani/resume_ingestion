@@ -132,7 +132,6 @@ class ResumeParserService
             }
         }
 
-        // 3. Direct name (no label): e.g. "PRUTHIL TEJANI" at top, or "PRUTHIL TEJANI FULL STACK DEVELOPER" on one line
         $topLines = array_slice($lines, 0, 15);
         // 3.0 Strong heuristic: in many resumes the very first line is the candidate name (like in the image)
         $firstLine = $topLines[0] ?? '';
@@ -181,7 +180,6 @@ class ResumeParserService
             }
             $upperLine = strtoupper($line);
 
-            // 3a. Same line has "NAME + JOB TITLE" (e.g. "PRUTHIL TEJANI FULL STACK DEVELOPER") – take only name part
             foreach ($jobTitleMarkers as $marker) {
                 if (str_contains($upperLine, $marker)) {
                     $pos = stripos($line, $marker);
@@ -207,7 +205,6 @@ class ResumeParserService
                 continue;
             }
 
-            // Strict: Title Case or ALL CAPS (e.g. "Maulik Limbani", "PRUTHIL TEJANI")
             if (preg_match('/^[A-Z][a-z]+(\s[A-Z]\.?|\s[A-Z][a-z]+|\-[A-Z][a-z]+)*(?:\s(?:Jr\.?|Sr\.?|III|II|IV))?$/u', $line)) {
                 return $line;
             }
